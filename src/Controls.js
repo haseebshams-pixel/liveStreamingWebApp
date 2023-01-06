@@ -69,9 +69,11 @@ function Controls() {
 
   const leaveRoom = async () => {
     if (localPeer.roleName === "broadcaster") {
+      localStorage.removeItem("isBroadCasterLoggedIn");
       hmsActions.leave();
       await hmsActions.stopHLSStreaming();
     } else {
+      console.log("heloo");
       hmsActions.leave();
     }
   };
