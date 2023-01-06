@@ -4,11 +4,16 @@ import { ENDPOINT, ROOM_ID } from "./endpoints";
 
 function JoinRoom() {
   const [username, setUsername] = useState("");
-  const [selectedRole, setSelectedRole] = useState("broadcaster");
   const hmsActions = useHMSActions();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let selectedRole = "";
+    if (username == "admin") {
+      selectedRole = "broadcaster";
+    } else {
+      selectedRole = "hls-viewer";
+    }
     const response = await fetch(`${ENDPOINT}api/token`, {
       method: "POST",
       body: JSON.stringify({
@@ -35,16 +40,6 @@ function JoinRoom() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <select
-        type="text"
-        required
-        value={selectedRole}
-        onChange={(e) => setSelectedRole(e.target.value)}
-        placeholder="Select Role"
-      >
-        <option>broadcaster</option>
-        <option>hls-viewer</option>
-      </select>
       <button>Join</button>
     </form>
   );
